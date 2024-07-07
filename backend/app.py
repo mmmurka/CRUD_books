@@ -1,9 +1,23 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 import backend.db as db
 from backend.api.api import router as api_router
 
 app = FastAPI()
+
+origins = [
+    "http://127.0.0.1:8001",
+    "http://localhost:8001",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")
