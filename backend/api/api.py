@@ -27,9 +27,6 @@ def get_book(id: int):
 
 @router.post("/books", response_model=Book)
 def create_book(book: BookCreate):
-    logging.info(f"Received JSON data: {book.json()}")
-    print(book.json)
-
     with db.get_db_connection() as conn:
         cursor = conn.execute(
             "INSERT INTO books (title, author, published_date, isbn, pages)"

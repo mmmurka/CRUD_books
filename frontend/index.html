@@ -86,7 +86,12 @@
                 url += `/${encodeURIComponent(searchId)}`;
             }
             fetch(url)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Book not found');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     booksList.innerHTML = ''; // Очищаем текущий список
                     if (Array.isArray(data)) {
@@ -101,7 +106,22 @@
                         booksList.appendChild(bookItem);
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    if (error.message === 'Book not found') {
+                        showErrorMessage('Book not found');
+                    } else {
+                        console.error('Error:', error);
+                    }
+                });
+        }
+
+        // Функция для отображения сообщения об ошибке
+        function showErrorMessage(message) {
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = message;
+            errorMessage.style.color = 'red';
+            booksList.innerHTML = ''; // Очищаем текущий список
+            booksList.appendChild(errorMessage);
         }
 
         // Функция для создания элемента книги в списке
@@ -109,6 +129,7 @@
             const bookItem = document.createElement('div');
             bookItem.classList.add('book-item');
             bookItem.innerHTML = `
+                <p><strong>ID:</strong> ${book.id}</p>
                 <p><strong>Title:</strong> ${book.title}</p>
                 <p><strong>Author:</strong> ${book.author}</p>
                 <p><strong>Published Date:</strong> ${book.published_date}</p>
