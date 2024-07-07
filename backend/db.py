@@ -25,27 +25,3 @@ def create_books_table():
             """
         )
         conn.commit()
-
-        # Вставка начальных данных
-        initial_book = {
-            "title": "Три товариші",
-            "author": "Еріх Марія Ремарк",
-            "published_date": "04.05.1936",
-            "isbn": "9783462046311",
-            "pages": 567,
-        }
-
-        conn.execute(
-            """
-            INSERT INTO books (title, author, published_date, isbn, pages)
-            VALUES (?, ?, ?, ?, ?)
-            """,
-            (
-                initial_book["title"],
-                initial_book["author"],
-                initial_book["published_date"],
-                initial_book["isbn"],
-                initial_book["pages"],
-            ),
-        )
-        conn.commit()
