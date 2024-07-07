@@ -1,8 +1,7 @@
+import db as db
+from api.api import router as api_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-import backend.db as db
-from backend.api.api import router as api_router
 
 app = FastAPI()
 

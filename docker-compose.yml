@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - '8001:8001'
+    volumes:
+      - ./frontend:/app
+
+  backend:
+    build: ./backend
+    restart: always
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./backend:/app
